@@ -9,6 +9,14 @@
 <body>
 
     <main class="calc-container">
+
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px;">
+            <span style="color: var(--text-muted); font-size: 0.9rem;">
+                Zalogowano jako: <strong style="color: var(--primary-color); text-transform: uppercase;"><?php echo $_SESSION['role']; ?></strong>
+            </span>
+            <a href="<?php echo _APP_URL; ?>/app/security/logout.php" class="btn-submit" style="padding: 6px 12px; font-size: 0.8rem; margin-top: 0; text-decoration: none;">[ Wyloguj ]</a>
+        </div>
+
         <h2 class="calc-title">&gt; Kalkulator_BMI &amp; Kalorii</h2>
         
         <form action="<?php echo _APP_URL;?>/app/calc.php" method="post" class="calc-form">
@@ -67,9 +75,16 @@
             </div>
         <?php endif; ?>
 
-        <div style="margin-top: 20px; text-align: center;">
-            <a href="<?php echo _APP_URL; ?>/app/security/logout.php" class="btn-submit" style="display: inline-block; text-decoration: none; padding: 8px 16px;">[ Wyloguj ]</a>
-        </div>
+        <?php if ($_SESSION['role'] == 'admin'): ?>
+            <div class="alert-result" style="border-color: #ffaa00; background-color: rgba(255, 170, 0, 0.05); margin-top: 30px;">
+                <h4 style="color: #ffaa00; border-bottom-color: rgba(255, 170, 0, 0.3);">Panel Administratora</h4>
+                <p class="result-item" style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 10px;">
+                    Dodatkowe uprawnienia
+                </p>
+                <button class="btn-submit" style="border-color: #ffaa00; color: #ffaa00; font-size: 0.8rem; padding: 8px;">[ OPCJA A ]</button>
+                <button class="btn-submit" style="border-color: #ff4d4d; color: #ff4d4d; font-size: 0.8rem; padding: 8px; margin-left: 10px;">[ OPCJA B ]</button>
+            </div>
+        <?php endif; ?>
     </main>
 
 </body>
