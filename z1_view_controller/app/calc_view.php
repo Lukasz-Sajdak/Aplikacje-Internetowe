@@ -66,6 +66,10 @@
                 <p class="result-item"><strong>Zapotrzebowanie:</strong> <span class="highlight"><?php echo $result_kcal; ?></span> kcal / dzień</p>
             </div>
         <?php endif; ?>
+
+        <div style="margin-top: 20px; text-align: center;">
+            <a href="<?php echo _APP_URL; ?>/app/security/logout.php" class="btn-submit" style="display: inline-block; text-decoration: none; padding: 8px 16px;">[ Wyloguj ]</a>
+        </div>
     </main>
 
 </body>
