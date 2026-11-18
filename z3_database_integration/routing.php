@@ -8,3 +8,4 @@ App::getRouter()->setLoginRoute('login');
 Utils::addRoute('login', 'LoginCtrl');
 Utils::addRoute('logout', 'LoginCtrl');
 Utils::addRoute('calcCompute', 'CalcCtrl', ['user', 'admin']);
+Utils::addRoute('showData', 'CalcCtrl', ['admin']);

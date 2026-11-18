@@ -83,4 +83,20 @@ class CalcCtrl {
         App::getSmarty()->assign('currentRole', RoleUtils::inRole('admin') ? 'admin' : 'user');
         App::getSmarty()->display('calc_view.tpl');
     }
+    public function action_showData() {
+        $records = [];
+        try {
+            $records = App::getDB()->select("calcs", "*", [
+                "ORDER" => ["id" => "DESC"]
+            ]);
+        } catch (\Throwable $e) {
+            App::getMessages()->addError('Błąd odczytu danych z bazy: ' . $e->getMessage());
+        }
+
+        App::getSmarty()->assign('records', $records);
+        App::getSmarty()->assign('showData', true);
+        App::getSmarty()->assign('isAdmin', RoleUtils::inRole('admin'));
+        App::getSmarty()->assign('currentRole', RoleUtils::inRole('admin') ? 'admin' : 'user');
+        App::getSmarty()->display('calc_view.tpl');
+    }
 }

@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 5.4.5, created on 2026-11-18 18:27:12
+/* Smarty version 5.4.5, created on 2026-11-18 18:31:51
   from 'file:calc_view.tpl' */
 
 /* @var \Smarty\Template $_smarty_tpl */
 if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
   'version' => '5.4.5',
-  'unifunc' => 'content_6afddff00ef666_00130665',
+  'unifunc' => 'content_6afde107c511e4_86236576',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '7facdb322132b47ccecd0aff5c5f1feea5f51a68' => 
     array (
       0 => 'calc_view.tpl',
-      1 => 1795022824,
+      1 => 1795023095,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
   array (
   ),
 ))) {
-function content_6afddff00ef666_00130665 (\Smarty\Template $_smarty_tpl) {
+function content_6afde107c511e4_86236576 (\Smarty\Template $_smarty_tpl) {
 $_smarty_current_dir = '/home/lukas/studia/AppInt/z3_database_integration/app/views';
 ?><!DOCTYPE HTML>
 <html lang="pl">
@@ -32,14 +32,14 @@ $_smarty_current_dir = '/home/lukas/studia/AppInt/z3_database_integration/app/vi
 /css/style.css">
 </head>
 <body>
-    <main class="calc-container">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px;">
-            <span style="color: var(--text-muted); font-size: 0.9rem;">
-                Zalogowano jako: <strong style="color: var(--primary-color); text-transform: uppercase;"><?php echo $_smarty_tpl->getValue('currentRole');?>
+    <main class="calc-container <?php if ((true && ($_smarty_tpl->hasVariable('showData') && null !== ($_smarty_tpl->getValue('showData') ?? null))) && $_smarty_tpl->getValue('showData')) {?>wide<?php }?>">
+        <div class="top-bar">
+            <span class="user-info">
+                Zalogowano jako: <strong class="highlight uppercase"><?php echo $_smarty_tpl->getValue('currentRole');?>
 </strong>
             </span>
             <a href="<?php echo $_smarty_tpl->getValue('conf')->action_root;?>
-logout" class="btn-submit" style="padding: 6px 12px; font-size: 0.8rem; margin-top: 0; text-decoration: none;">[ Wyloguj ]</a>
+logout" class="btn-submit btn-sm">[ Wyloguj ]</a>
         </div>
 
         <h2 class="calc-title">&gt; Kalkulator_BMI &amp; Kalorii</h2>
@@ -116,17 +116,77 @@ $_smarty_tpl->getSmarty()->getRuntime('Foreach')->restore($_smarty_tpl, 1);?>
         <?php }?>
 
         <?php if ($_smarty_tpl->getValue('isAdmin')) {?>
-            <div class="alert-result" style="border-color: #ffaa00; background-color: rgba(255, 170, 0, 0.05); margin-top: 30px;">
-                <h4 style="color: #ffaa00; border-bottom-color: rgba(255, 170, 0, 0.3);">Panel Administratora</h4>
-                <p class="result-item" style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 10px;">
+            <div class="alert-result admin-panel">
+                <h4>Panel Administratora</h4>
+                <p class="result-item admin-desc">
                     Dodatkowe uprawnienia
                 </p>
-                <button class="btn-submit" style="border-color: #ffaa00; color: #ffaa00; font-size: 0.8rem; padding: 8px;">[SHOW DATA]</button>
-                <button class="btn-submit" style="border-color: #ff4d4d; color: #ff4d4d; font-size: 0.8rem; padding: 8px; margin-left: 10px;">[ OPCJA B ]</button>
+                <div class="admin-actions">
+                    <a href="<?php echo $_smarty_tpl->getValue('conf')->action_root;?>
+showData" class="btn-submit btn-sm btn-warning">[ SHOW DATA ]</a>
+                    <?php if ((true && ($_smarty_tpl->hasVariable('showData') && null !== ($_smarty_tpl->getValue('showData') ?? null))) && $_smarty_tpl->getValue('showData')) {?>
+                        <a href="<?php echo $_smarty_tpl->getValue('conf')->action_root;?>
+calcCompute" class="btn-submit btn-sm">[ HIDE DATA ]</a>
+                    <?php }?>
+                    <button type="button" class="btn-submit btn-sm btn-danger">[ OPCJA B ]</button>
+                </div>
+
+                <?php if ((true && ($_smarty_tpl->hasVariable('showData') && null !== ($_smarty_tpl->getValue('showData') ?? null))) && $_smarty_tpl->getValue('showData')) {?>
+                    <div class="history-section">
+                        <h5 class="history-title">&gt; Baza_Obliczeń (tabela: calcs)</h5>
+                        <?php if ((true && ($_smarty_tpl->hasVariable('records') && null !== ($_smarty_tpl->getValue('records') ?? null))) && $_smarty_tpl->getSmarty()->getModifierCallback('count')($_smarty_tpl->getValue('records')) > 0) {?>
+                            <div class="table-wrapper">
+                                <table class="db-table">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Login</th>
+                                            <th>Parametry</th>
+                                            <th>BMI</th>
+                                            <th>Kcal</th>
+                                            <th>Data</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+$_from = $_smarty_tpl->getSmarty()->getRuntime('Foreach')->init($_smarty_tpl, $_smarty_tpl->getValue('records'), 'row');
+$foreach1DoElse = true;
+foreach ($_from ?? [] as $_smarty_tpl->getVariable('row')->value) {
+$foreach1DoElse = false;
+?>
+                                            <tr>
+                                                <td><?php echo $_smarty_tpl->getValue('row')['id'];?>
+</td>
+                                                <td><span class="highlight"><?php echo $_smarty_tpl->getValue('row')['login'];?>
+</span></td>
+                                                <td><?php echo $_smarty_tpl->getValue('row')['weight'];?>
+ kg | <?php echo $_smarty_tpl->getValue('row')['height'];?>
+ cm | <?php echo $_smarty_tpl->getValue('row')['age'];?>
+ l. | <?php echo $_smarty_tpl->getValue('row')['gender'];?>
+ | akt: <?php echo $_smarty_tpl->getValue('row')['activity'];?>
+</td>
+                                                <td><span class="highlight"><?php echo $_smarty_tpl->getValue('row')['result_bmi'];?>
+</span> (<?php echo $_smarty_tpl->getValue('row')['bmi_category'];?>
+)</td>
+                                                <td><span class="highlight"><?php echo $_smarty_tpl->getValue('row')['result_kcal'];?>
+</span> kcal</td>
+                                                <td><?php echo $_smarty_tpl->getValue('row')['created_at'];?>
+</td>
+                                            </tr>
+                                        <?php
+}
+$_smarty_tpl->getSmarty()->getRuntime('Foreach')->restore($_smarty_tpl, 1);?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <?php } else { ?>
+                            <p class="result-item admin-desc">Brak zapisanych rekordów w bazie danych.</p>
+                        <?php }?>
+                    </div>
+                <?php }?>
             </div>
         <?php }?>
     </main>
 </body>
-</html>
-<?php }
+</html><?php }
 }
