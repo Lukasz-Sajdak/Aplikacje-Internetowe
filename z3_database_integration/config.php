@@ -4,14 +4,14 @@ $conf->debug = true; # set true during development and use in your code (for ins
 # ---- Webapp location
 $conf->server_name = 'localhost';   # server address and port
 $conf->protocol = 'http';           # http or https
-$conf->app_root = '/z2_amelia_framework';   # project subfolder in domain (relative to main domain)
+$conf->app_root = '/z3_database_integration';   # project subfolder in domain (relative to main domain)
 
 # ---- Database config - values required by Medoo
 $conf->db_type = 'mysql';
 $conf->db_server = 'localhost';
-$conf->db_name = '_database_name';
-$conf->db_user = '_user';
-$conf->db_pass = '_password';
+$conf->db_name = 'calc_bmi';
+$conf->db_user = 'root';
+$conf->db_pass = '';
 $conf->db_charset = 'utf8';
 
 # ---- Database config - optional values

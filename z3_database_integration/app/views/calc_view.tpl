@@ -7,12 +7,12 @@
     <link rel="stylesheet" href="{$conf->app_url}/css/style.css">
 </head>
 <body>
-    <main class="calc-container">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px;">
-            <span style="color: var(--text-muted); font-size: 0.9rem;">
-                Zalogowano jako: <strong style="color: var(--primary-color); text-transform: uppercase;">{$currentRole}</strong>
+    <main class="calc-container {if isset($showData) && $showData}wide{/if}">
+        <div class="top-bar">
+            <span class="user-info">
+                Zalogowano jako: <strong class="highlight uppercase">{$currentRole}</strong>
             </span>
-            <a href="{$conf->action_root}logout" class="btn-submit" style="padding: 6px 12px; font-size: 0.8rem; margin-top: 0; text-decoration: none;">[ Wyloguj ]</a>
+            <a href="{$conf->action_root}logout" class="btn-submit btn-sm">[ Wyloguj ]</a>
         </div>
 
         <h2 class="calc-title">&gt; Kalkulator_BMI &amp; Kalorii</h2>
@@ -74,13 +74,54 @@
         {/if}
 
         {if $isAdmin}
-            <div class="alert-result" style="border-color: #ffaa00; background-color: rgba(255, 170, 0, 0.05); margin-top: 30px;">
-                <h4 style="color: #ffaa00; border-bottom-color: rgba(255, 170, 0, 0.3);">Panel Administratora</h4>
-                <p class="result-item" style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 10px;">
+            <div class="alert-result admin-panel">
+                <h4>Panel Administratora</h4>
+                <p class="result-item admin-desc">
                     Dodatkowe uprawnienia
                 </p>
-                <button class="btn-submit" style="border-color: #ffaa00; color: #ffaa00; font-size: 0.8rem; padding: 8px;">[ OPCJA A ]</button>
-                <button class="btn-submit" style="border-color: #ff4d4d; color: #ff4d4d; font-size: 0.8rem; padding: 8px; margin-left: 10px;">[ OPCJA B ]</button>
+                <div class="admin-actions">
+                    <a href="{$conf->action_root}showData" class="btn-submit btn-sm btn-warning">[ SHOW DATA ]</a>
+                    {if isset($showData) && $showData}
+                        <a href="{$conf->action_root}calcCompute" class="btn-submit btn-sm">[ HIDE DATA ]</a>
+                    {/if}
+                    <button type="button" class="btn-submit btn-sm btn-danger">[ OPCJA B ]</button>
+                </div>
+
+                {if isset($showData) && $showData}
+                    <div class="history-section">
+                        <h5 class="history-title">&gt; Baza_Obliczeń (tabela: calcs)</h5>
+                        {if isset($records) && count($records) > 0}
+                            <div class="table-wrapper">
+                                <table class="db-table">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Login</th>
+                                            <th>Parametry</th>
+                                            <th>BMI</th>
+                                            <th>Kcal</th>
+                                            <th>Data</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {foreach $records as $row}
+                                            <tr>
+                                                <td>{$row.id}</td>
+                                                <td><span class="highlight">{$row.login}</span></td>
+                                                <td>{$row.weight} kg | {$row.height} cm | {$row.age} l. | {$row.gender} | akt: {$row.activity}</td>
+                                                <td><span class="highlight">{$row.result_bmi}</span> ({$row.bmi_category})</td>
+                                                <td><span class="highlight">{$row.result_kcal}</span> kcal</td>
+                                                <td>{$row.created_at}</td>
+                                            </tr>
+                                        {/foreach}
+                                    </tbody>
+                                </table>
+                            </div>
+                        {else}
+                            <p class="result-item admin-desc">Brak zapisanych rekordów w bazie danych.</p>
+                        {/if}
+                    </div>
+                {/if}
             </div>
         {/if}
     </main>

@@ -48,6 +48,24 @@ class CalcCtrl {
                     $bmr = (10 * $weight) + (6.25 * $height) - (5 * $age) - 161;
                 }
                 $result_kcal = round($bmr * $activity);
+
+                $userLogin = $_SESSION['user_login'] ?? (RoleUtils::inRole('admin') ? 'admin' : 'user');
+
+                try {
+                    App::getDB()->insert("calcs", [
+                        "login" => $userLogin,
+                        "weight" => $weight,
+                        "height" => $height,
+                        "age" => $age,
+                        "gender" => $gender,
+                        "activity" => $activity,
+                        "result_bmi" => $result_bmi,
+                        "bmi_category" => $bmi_category,
+                        "result_kcal" => $result_kcal
+                    ]);
+                } catch (\Throwable $e) {
+                    App::getMessages()->addError('Błąd zapisu do bazy danych: ' . $e->getMessage());
+                }
             }
         }
 
@@ -61,6 +79,22 @@ class CalcCtrl {
         App::getSmarty()->assign('bmi_category', $bmi_category);
         App::getSmarty()->assign('result_kcal', $result_kcal);
 
+        App::getSmarty()->assign('isAdmin', RoleUtils::inRole('admin'));
+        App::getSmarty()->assign('currentRole', RoleUtils::inRole('admin') ? 'admin' : 'user');
+        App::getSmarty()->display('calc_view.tpl');
+    }
+    public function action_showData() {
+        $records = [];
+        try {
+            $records = App::getDB()->select("calcs", "*", [
+                "ORDER" => ["id" => "DESC"]
+            ]);
+        } catch (\Throwable $e) {
+            App::getMessages()->addError('Błąd odczytu danych z bazy: ' . $e->getMessage());
+        }
+
+        App::getSmarty()->assign('records', $records);
+        App::getSmarty()->assign('showData', true);
         App::getSmarty()->assign('isAdmin', RoleUtils::inRole('admin'));
         App::getSmarty()->assign('currentRole', RoleUtils::inRole('admin') ? 'admin' : 'user');
         App::getSmarty()->display('calc_view.tpl');
