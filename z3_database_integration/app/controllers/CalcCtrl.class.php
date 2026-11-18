@@ -48,6 +48,24 @@ class CalcCtrl {
                     $bmr = (10 * $weight) + (6.25 * $height) - (5 * $age) - 161;
                 }
                 $result_kcal = round($bmr * $activity);
+
+                $userLogin = $_SESSION['user_login'] ?? (RoleUtils::inRole('admin') ? 'admin' : 'user');
+
+                try {
+                    App::getDB()->insert("calcs", [
+                        "login" => $userLogin,
+                        "weight" => $weight,
+                        "height" => $height,
+                        "age" => $age,
+                        "gender" => $gender,
+                        "activity" => $activity,
+                        "result_bmi" => $result_bmi,
+                        "bmi_category" => $bmi_category,
+                        "result_kcal" => $result_kcal
+                    ]);
+                } catch (\Throwable $e) {
+                    App::getMessages()->addError('Błąd zapisu do bazy danych: ' . $e->getMessage());
+                }
             }
         }
 

@@ -17,9 +17,11 @@ class LoginCtrl {
             if (!App::getMessages()->isError()) {
                 if ($login == 'admin' && $pass == 'admin') {
                     RoleUtils::addRole('admin');
+                    $_SESSION['user_login'] = $login;
                     App::getRouter()->redirectTo('calcCompute');
                 } else if ($login == 'user' && $pass == 'user') {
                     RoleUtils::addRole('user');
+                    $_SESSION['user_login'] = $login;
                     App::getRouter()->redirectTo('calcCompute');
                 } else {
                     App::getMessages()->addError('Nieprawidłowy login lub hasło.');

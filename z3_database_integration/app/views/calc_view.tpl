@@ -79,7 +79,7 @@
                 <p class="result-item" style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 10px;">
                     Dodatkowe uprawnienia
                 </p>
-                <button class="btn-submit" style="border-color: #ffaa00; color: #ffaa00; font-size: 0.8rem; padding: 8px;">[ OPCJA A ]</button>
+                <button class="btn-submit" style="border-color: #ffaa00; color: #ffaa00; font-size: 0.8rem; padding: 8px;">[SHOW DATA]</button>
                 <button class="btn-submit" style="border-color: #ff4d4d; color: #ff4d4d; font-size: 0.8rem; padding: 8px; margin-left: 10px;">[ OPCJA B ]</button>
             </div>
         {/if}
